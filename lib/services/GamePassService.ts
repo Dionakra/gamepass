@@ -30,7 +30,7 @@ export default class GamePassService {
     this.oldProducts = JSON.parse(text)
   }
 
-  getOldProducts(){
+  getOldProducts() {
     return this.oldProducts
   }
 
@@ -73,18 +73,19 @@ export default class GamePassService {
   getFinalProducts(products: GamePassProduct[]): GamePassProduct[] {
     const list: GamePassProduct[] = [...this.oldProducts].filter(x => this.allIds().includes(x.id))
 
-    for (let product of products) {
-      const exists = list.find(x => x.title == product.title)
+    const finalProducts: GamePassProduct[] = []
+    for (let product of [...list, ...products]) {
+      const exists = finalProducts.find(x => x.title == product.title)
 
       if (exists) {
         exists.platforms = [...new Set([...exists.platforms, ...product.platforms])]
         exists.title = this.cleanTitle(exists.title)
       } else {
-        list.push(product)
+        finalProducts.push(product)
       }
     }
 
-    return list.sort((a, b) => a.title.localeCompare(b.title))
+    return finalProducts.sort((a, b) => a.title.localeCompare(b.title))
   }
 
   private async fetchCategoryGames(category: string): Promise<string[]> {
