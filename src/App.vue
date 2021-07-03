@@ -1,8 +1,8 @@
 <template>
   <h1 class="text-3xl text-center font-bold text-gris">Find your next GamePass game by duration</h1>
-  <div class="bg-white w-full flex flex-inline justify-center py-4 my-4">
-    <img class="h-32" src="/logo.svg" />
-    <div class="ml-16">
+  <div class="flex bg-white w-full flex-wrap md:flex-inline justify-center py-4">
+    <img class="hidden md:block h-32" src="/logo.svg" />
+    <div class="ml-0 md:ml-16">
       <div class="flex flex-inline mb-3">
         <input v-model="searchTerm" type="text" class="w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-md" placeholder="Search for your game!" />
       </div>
@@ -23,7 +23,7 @@
     </div>
   </div>
 
-  <div class="text-center mb-3 text-sm">
+  <div class="hidden md:block text-center mb-3 text-sm">
     <p>Games information extracted from <a class="text-xbox" href="https://www.xbox.com/en-US/xbox-game-pass/games" target="_blank" rel="noopener">Game Pass Library</a>.</p>
     <p>Duration information extracted from <a class="text-xbox" href="https://howlongtobeat.com/" target="_blank" rel="noopener">HowLongToBeat</a> (only Main Story).</p>
   </div>
@@ -34,7 +34,7 @@
         <Pagination :totalPages="totalPages" :currentPage="currentPage" @changedPage="(newPage) => (currentPage = newPage)" />
 
         <div class="flex flex-wrap w-full" role="list">
-          <div v-for="game in pageContent()" :key="game.id" class="flex flex-col w-1/2 md:w-1/3 lg:w-1/4 xl:w-1/5 2xl:w-1/6 px-1 pb-4" role="listitem">
+          <div v-for="game in pageContent()" :key="game.id" class="flex flex-col w-1/2 md:w-1/3 lg:w-1/5 xl:w-1/6 px-1 pb-4" role="listitem">
             <div class="rounded overflow-hidden flex-1 bg-white">
               <div class="relative">
                 <img class="w-full" :src="game.img" :alt="game.title" :title="game.title" loading="lazy" />
