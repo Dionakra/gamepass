@@ -75,7 +75,7 @@ export default class GamePassService {
 
     const finalProducts: GamePassProduct[] = []
     for (let product of [...list, ...products]) {
-      const exists = finalProducts.find(x => x.title == product.title)
+      const exists = finalProducts.find(x => x.title.toLowerCase() == product.title.toLowerCase())
 
       if (exists) {
         exists.platforms = [...new Set([...exists.platforms, ...product.platforms])]

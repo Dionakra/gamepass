@@ -139,6 +139,7 @@ export default {
       } else {
         this.platforms.push(platform)
       }
+      this.currentPage = 1
     }
   }
 }

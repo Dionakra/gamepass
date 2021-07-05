@@ -5,7 +5,7 @@
         :disabled="currentPage == 1"
         class="disabled:opacity-50 group relative w-full flex justify-center py-2 px-4 border border-transparent text-sm font-bold rounded-md text-white bg-xbox hover:bg-green-600"
       >
-        &lt;&lt;&nbsp; Anterior
+        &lt;&lt;&nbsp; Previous
       </button>
     </div>
 
@@ -22,7 +22,7 @@
         :disabled="currentPage == totalPages"
         class="disabled:opacity-50 group relative w-full flex justify-center py-2 px-4 border border-transparent text-sm font-bold rounded-md text-white bg-xbox hover:bg-green-600"
       >
-        Siguiente &nbsp;&gt;&gt;
+        Next &nbsp;&gt;&gt;
       </button>
     </div>
   </div>
