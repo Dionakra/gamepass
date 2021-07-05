@@ -31,6 +31,15 @@
   <div class="bg-gris">
     <main class="container mx-auto px-3">
       <div class="flex flex-wrap justify-center items-center">
+        <div class="text-center text-white mt-3 font-semibold">
+          <p>
+            Total Games: <span class="font-light">{{ filterGames().length }}</span>
+          </p>
+          <p>
+            Total PlayTime: <span class="font-light"> {{ playTime() }} hours <span class="text-xs">(~ {{Math.round(playTime()/24)}} days)</span></span>
+          </p>
+        </div>
+
         <Pagination :totalPages="totalPages" :currentPage="currentPage" @changedPage="(newPage) => (currentPage = newPage)" />
 
         <div class="flex flex-wrap w-full" role="list">
@@ -140,6 +149,11 @@ export default {
         this.platforms.push(platform)
       }
       this.currentPage = 1
+    },
+    playTime() {
+      return this.filterGames()
+        .filter((x) => x.duration < 500)
+        .reduce((acc, cur) => acc + cur.duration, 0)
     }
   }
 }
