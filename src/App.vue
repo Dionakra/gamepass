@@ -1,6 +1,11 @@
 <template>
   <h1 class="text-3xl text-center font-bold text-gris">Find your next GamePass game by duration</h1>
-  <div class="flex bg-white w-full flex-wrap md:flex-inline justify-center py-4">
+  <div class="hidden md:block text-center mb-3 text-xs">
+    <p>Games information extracted from <a class="text-xbox" href="https://www.xbox.com/en-US/xbox-game-pass/games" target="_blank" rel="noopener">Game Pass Library</a>.</p>
+    <p>Duration information extracted from <a class="text-xbox" href="https://howlongtobeat.com/" target="_blank" rel="noopener">HowLongToBeat</a> (only Main Story).</p>
+  </div>
+
+  <div class="flex bg-white w-full flex-wrap md:flex-inline justify-center pb-4">
     <img class="hidden md:block h-32" src="/logo.svg" />
     <div class="ml-0 md:ml-16">
       <div class="flex flex-inline mb-3">
@@ -23,11 +28,6 @@
     </div>
   </div>
 
-  <div class="hidden md:block text-center mb-3 text-sm">
-    <p>Games information extracted from <a class="text-xbox" href="https://www.xbox.com/en-US/xbox-game-pass/games" target="_blank" rel="noopener">Game Pass Library</a>.</p>
-    <p>Duration information extracted from <a class="text-xbox" href="https://howlongtobeat.com/" target="_blank" rel="noopener">HowLongToBeat</a> (only Main Story).</p>
-  </div>
-
   <div class="bg-gris">
     <main class="container mx-auto px-3">
       <div class="flex flex-wrap justify-center items-center">
@@ -36,7 +36,10 @@
             Total Games: <span class="font-light">{{ filterGames().length }}</span>
           </p>
           <p>
-            Total PlayTime: <span class="font-light"> {{ playTime() }} hours <span class="text-xs">(~ {{Math.round(playTime()/24)}} days)</span></span>
+            Total PlayTime:
+            <span class="font-light">
+              {{ playTime() }} hours <span class="text-xs">(~ {{ Math.round(playTime() / 24) }} days)</span></span
+            >
           </p>
         </div>
 
@@ -46,7 +49,7 @@
           <div v-for="game in pageContent()" :key="game.id" class="flex flex-col w-1/2 md:w-1/3 lg:w-1/5 xl:w-1/6 px-1 pb-4" role="listitem">
             <div class="rounded overflow-hidden flex-1 bg-white">
               <div class="relative">
-                <img class="w-full" :src="game.img" :alt="game.title" :title="game.title" loading="lazy" />
+                <img class="w-full" :src="'https://raw.githubusercontent.com/Dionakra/gamepass/main/public/covers/' + game.id + '.jpeg'" :alt="game.title" :title="game.title" loading="lazy" />
                 <div class="absolute bg-xbox text-white shadow-md bottom-2 right-2 font-bold rounded-full h-11 w-11 pt-1 text-xl text-center">
                   <span class="align-middle">
                     {{ game.duration }}
