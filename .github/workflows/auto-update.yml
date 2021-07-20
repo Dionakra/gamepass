@@ -32,6 +32,6 @@ jobs:
           author_name: github-actions
           author_email: actions@github.com
           message: 'Updated GamePass Games'
-          add: "['*.json', '*.jpeg']"
+          add: '*'
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
