@@ -7,7 +7,6 @@ on:
 jobs:
   run:
     name: Update games DB
-    continue-on-error: true
     runs-on: ubuntu-latest
     steps:
       - name: Checkout repo
@@ -22,6 +21,7 @@ jobs:
         run: npm install
 
       - name: Run the update
+        continue-on-error: true
         run: npm run update
 
       - name: Download covers
