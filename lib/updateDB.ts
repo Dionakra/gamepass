@@ -14,7 +14,6 @@ async function main() {
   const ids = await gamePass.getNewIds()
   const details = await gamePass.fetchDetails(ids)
   const products = await gamePass.getFinalProducts(details)
-
   const withoutDuration = products.filter(p => !p.duration)
 
   for (let product of withoutDuration) {
@@ -22,7 +21,7 @@ async function main() {
     product.duration = await hltb.getDuration(product.title)
   }
 
-  if(JSON.stringify(gamePass.getOldProducts()) == JSON.stringify(products)){
+  if(gamePass.getOldProductsText() == JSON.stringify(products)){
     console.log("No change :)")
     return
   }

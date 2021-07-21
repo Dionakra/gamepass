@@ -6,6 +6,7 @@ export default class GamePassService {
   private xbox: string[] = []
   private pc: string[] = []
   private xcloud: string[] = []
+  private oldProductsText: string
 
   private oldProducts: GamePassProduct[] = []
 
@@ -27,11 +28,12 @@ export default class GamePassService {
 
   constructor(dbPath: string) {
     const text = fs.readFileSync(dbPath, "utf-8")
+    this.oldProductsText = text
     this.oldProducts = JSON.parse(text)
   }
 
-  getOldProducts() {
-    return this.oldProducts
+  getOldProductsText(): string {
+    return this.oldProductsText
   }
 
   async fetchGames(): Promise<void> {
@@ -61,7 +63,6 @@ export default class GamePassService {
       const props = game.LocalizedProperties[0]
       return {
         id: game.ProductId,
-        developer: props.DeveloperName,
         title: this.cleanTitle(props.ProductTitle),
         img: props.Images.find((image: any) => image.ImagePurpose == "Poster").Uri,
         category: game.Properties.Category,
