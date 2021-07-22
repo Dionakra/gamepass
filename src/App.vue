@@ -114,7 +114,7 @@ export default {
     fetch('https://raw.githubusercontent.com/Dionakra/gamepass/main/public/index.json')
       .then((response) => response.json())
       .then((data) => {
-        this.games = data.sort((a, b) => a.duration - b.duration)
+        this.games = data.sort((a, b) => (a.duration || 0) - (b.duration || 0))
         this.loaded = true
       })
   },
