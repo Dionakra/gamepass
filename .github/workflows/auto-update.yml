@@ -21,6 +21,7 @@ jobs:
         run: npm install
 
       - name: Run the update
+        continue-on-error: true
         run: npm run update
 
       - name: Download covers
