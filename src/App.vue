@@ -6,24 +6,29 @@
   </div>
 
   <div class="flex bg-white w-full flex-wrap md:flex-inline justify-center pb-4">
-    <img class="hidden md:block h-32" src="/logo.svg" />
+    <img class="hidden md:block h-36" src="/logo.svg" />
     <div class="ml-0 md:ml-16">
       <div class="flex flex-inline mb-3">
         <input v-model="searchTerm" type="text" class="w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-md" placeholder="Search for your game!" />
       </div>
 
-      <div class="flex flex-inline">
-        <button class="mx-2 text-white font-bold w-16 rounded-lg p-2 h-16" @click="addPlatform('PC')" :class="platforms.includes('PC') ? 'bg-xbox' : 'bg-gris'">
+      <div class="flex flex-inline justify-center">
+        <button class="mx-2 text-white font-bold w-12 rounded-lg p-2 h-12" @click="addPlatform('PC')" :class="platforms.includes('PC') ? 'bg-xbox' : 'bg-gris'">
           <IconPC />
         </button>
 
-        <button class="mx-2 text-white font-bold w-16 rounded-lg p-2 h-16" @click="addPlatform('XBOX')" :class="platforms.includes('XBOX') ? 'bg-xbox' : 'bg-gris'">
+        <button class="mx-2 text-white font-bold w-12 rounded-lg p-2 h-12" @click="addPlatform('XBOX')" :class="platforms.includes('XBOX') ? 'bg-xbox' : 'bg-gris'">
           <IconXbox />
         </button>
 
-        <button class="mx-2 text-white font-bold w-16 rounded-lg p-2 h-16" @click="addPlatform('XCLOUD')" :class="platforms.includes('XCLOUD') ? 'bg-xbox' : 'bg-gris'">
+        <button class="mx-2 text-white font-bold w-12 rounded-lg p-2 h-12" @click="addPlatform('XCLOUD')" :class="platforms.includes('XCLOUD') ? 'bg-xbox' : 'bg-gris'">
           <IconXCloud />
         </button>
+      </div>
+
+      <div class="flex flex-inline justify-center space-x-2 mt-2 text-white font-semibold">
+        <button @click="sortByDuration = true" class="rounded-md px-2 py-1" :class="sortByDuration ? 'bg-xbox' : 'bg-gris'">Shortest</button>
+        <button @click="sortByDuration = false" class="rounded-md px-2 py-1" :class="sortByDuration ? 'bg-gris' : 'bg-xbox'">Newest</button>
       </div>
     </div>
   </div>
@@ -49,7 +54,13 @@
           <div v-for="game in pageContent()" :key="game.id" class="flex flex-col w-1/2 md:w-1/3 lg:w-1/5 xl:w-1/6 px-1 pb-4" role="listitem">
             <div class="rounded overflow-hidden flex-1 bg-white">
               <div class="relative">
-                <img class="w-full" :src="'https://raw.githubusercontent.com/Dionakra/gamepass/main/public/covers/' + game.id + '.jpeg'" :alt="game.title" :title="game.title" loading="lazy" />
+                <img
+                  class="w-full"
+                  :src="'https://raw.githubusercontent.com/Dionakra/gamepass/main/public/covers/' + game.id + '.jpeg'"
+                  :alt="game.title"
+                  :title="game.title"
+                  loading="lazy"
+                />
                 <div class="absolute bg-xbox text-white shadow-md bottom-2 right-2 font-bold rounded-full h-11 w-11 pt-1 text-xl text-center">
                   <span class="align-middle">
                     {{ game.duration }}
@@ -107,14 +118,15 @@ export default {
       totalPages: 0,
       // Other
       searchTerm: undefined,
-      platforms: []
+      platforms: [],
+      sortByDuration: true
     }
   },
   created() {
     fetch('https://raw.githubusercontent.com/Dionakra/gamepass/main/public/index.json')
       .then((response) => response.json())
       .then((data) => {
-        this.games = data.sort((a, b) => (a.duration || 0) - (b.duration || 0))
+        this.games = data
         this.loaded = true
       })
   },
@@ -142,6 +154,16 @@ export default {
           }
 
           return game.platforms.filter((p) => this.platforms.includes(p)).length > 0
+        })
+        .sort((a, b) => {
+          let res = 0
+          if (this.sortByDuration) {
+            res = (a.duration || 0) - (b.duration || 0)
+          } else {
+            res = b.startDate.localeCompare(a.startDate)
+          }
+
+          return res == 0 ? a.title.localeCompare(b.title) : res
         })
     },
     addPlatform(platform) {
