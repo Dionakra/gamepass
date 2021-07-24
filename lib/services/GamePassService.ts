@@ -1,6 +1,7 @@
 import fetch from "node-fetch"
 import GamePassProduct from "../models/GamePassProduct"
 import fs from "fs"
+import ProductComingLeaving from "../models/ProductComingLeaving"
 
 export default class GamePassService {
   private xbox: string[] = []
@@ -80,14 +81,9 @@ export default class GamePassService {
     return data.Products.map((game: any) => {
       const props = game.LocalizedProperties[0]
       const id = game.ProductId
-      const comingSoonPC = this.comingSoonPC.some(x => x == id)
-      const comingSoonConsole = this.comingSoonConsole.some(x => x == id)
-      const platforms = this.getPlatforms(id)
 
-      let startDate = undefined
-      if ((comingSoonPC && platforms.includes(this.PLATFORMS.PC)) || (comingSoonConsole && platforms.includes(this.PLATFORMS.XBOX))) {
-        startDate = new Date().toISOString().substr(0, 10)
-      }
+      const platforms = this.getPlatforms(id)
+      const comingLeaving = this.getComingLeaving(id)
 
       return {
         id: id,
@@ -95,12 +91,12 @@ export default class GamePassService {
         img: props.Images.find((image: any) => image.ImagePurpose == "Poster").Uri,
         category: game.Properties.Category,
         platforms: platforms,
-        startDate: startDate,
+        startDate: comingLeaving.startDate,
         linkTitle: props.ProductTitle.toLowerCase().replace(/\s/g, "-").replace(/[^a-z0-9-]/gi, ''),
-        comingSoonConsole: comingSoonConsole,
-        leavingSoonConsole: this.leavingSoonConsole.some(x => x == id),
-        comingSoonPC: comingSoonPC,
-        leavingSoonPC: this.leavingSoonPC.some(x => x == id),
+        comingSoonConsole: comingLeaving.comingSoonConsole,
+        leavingSoonConsole: comingLeaving.leavingSoonConsole,
+        comingSoonPC: comingLeaving.comingSoonPC,
+        leavingSoonPC: comingLeaving.leavingSoonPC,
       }
     })
   }
@@ -110,6 +106,14 @@ export default class GamePassService {
 
     const finalProducts: GamePassProduct[] = []
     for (let product of [...list, ...products]) {
+      const comingLeaving = this.getComingLeaving(product.id)
+      product.comingSoonPC = comingLeaving.comingSoonPC
+      product.comingSoonConsole = comingLeaving.comingSoonConsole
+      product.startDate = product.startDate || comingLeaving.startDate
+      product.leavingSoonConsole = comingLeaving.leavingSoonConsole
+      product.leavingSoonPC = comingLeaving.leavingSoonPC
+      product.platforms = this.getPlatforms(product.id)
+
       const exists = finalProducts.find(x => x.title.toLowerCase() == product.title.toLowerCase())
 
       if (exists) {
@@ -125,6 +129,26 @@ export default class GamePassService {
     }
 
     return finalProducts.sort((a, b) => a.title.localeCompare(b.title))
+  }
+
+  private getComingLeaving(id: string): ProductComingLeaving {
+    const platforms = this.getPlatforms(id)
+    const comingSoonPC = this.comingSoonPC.some(x => x == id)
+    const comingSoonConsole = this.comingSoonConsole.some(x => x == id)
+
+    let startDate = undefined
+    if ((comingSoonPC && platforms.includes(this.PLATFORMS.PC)) || (comingSoonConsole && platforms.includes(this.PLATFORMS.XBOX))) {
+      startDate = new Date().toISOString().substr(0, 10)
+    }
+
+    return <ProductComingLeaving>{
+      id: id,
+      comingSoonConsole: comingSoonConsole,
+      comingSoonPC: comingSoonPC,
+      startDate: startDate,
+      leavingSoonConsole: this.leavingSoonConsole.some(x => x == id),
+      leavingSoonPC: this.leavingSoonPC.some(x => x == id)
+    }
   }
 
   private async fetchCategoryGames(category: string): Promise<string[]> {

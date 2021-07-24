@@ -187,12 +187,12 @@ export default {
       // Other
       searchTerm: undefined,
       platforms: [],
-      sortByDuration: true,
+      sortByDuration: false,
       uniqueFilter: undefined
     }
   },
   created() {
-    fetch('/index.json')
+    fetch('https://raw.githubusercontent.com/Dionakra/gamepass/main/public/index.json')
       .then((response) => response.json())
       .then((data) => {
         this.games = data
