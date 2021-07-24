@@ -192,7 +192,7 @@ export default {
     }
   },
   created() {
-    fetch('/index.json')
+    fetch('https://raw.githubusercontent.com/Dionakra/gamepass/main/public/index.json')
       .then((response) => response.json())
       .then((data) => {
         this.games = data
