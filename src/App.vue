@@ -53,37 +53,39 @@
         <div class="flex flex-wrap w-full" role="list">
           <div v-for="game in pageContent()" :key="game.id" class="flex flex-col w-1/2 md:w-1/3 lg:w-1/5 xl:w-1/6 px-1 pb-4" role="listitem">
             <div class="rounded overflow-hidden flex-1 bg-white">
-              <div class="relative">
-                <img
-                  class="w-full"
-                  :src="'https://raw.githubusercontent.com/Dionakra/gamepass/main/public/covers/' + game.id + '.jpeg'"
-                  :alt="game.title"
-                  :title="game.title"
-                  loading="lazy"
-                />
-                <div class="absolute bg-xbox text-white shadow-md bottom-2 right-2 font-bold rounded-full h-11 w-11 pt-1 text-xl text-center">
-                  <span class="align-middle">
-                    {{ game.duration }}
-                  </span>
+              <a class="cursor-pointer" target="_blank" rel="noopener" :href="'https://www.microsoft.com/en-us/store/p/' + game.linkTitle + '/' + game.id">
+                <div class="relative">
+                  <img
+                    class="w-full"
+                    :src="'https://raw.githubusercontent.com/Dionakra/gamepass/main/public/covers/' + game.id + '.jpeg'"
+                    :alt="game.title"
+                    :title="game.title"
+                    loading="lazy"
+                  />
+                  <div class="absolute bg-xbox text-white shadow-md bottom-2 right-2 font-bold rounded-full h-11 w-11 pt-1 text-xl text-center">
+                    <span class="align-middle">
+                      {{ game.duration }}
+                    </span>
+                  </div>
                 </div>
-              </div>
-              <div class="flex flex-inline justify-center my-1">
-                <div class="mx-2 text-white font-bold rounded-lg p-1 w-8 h-8" :class="game.platforms.includes('PC') ? 'bg-xbox' : 'bg-gris'">
-                  <IconPC />
+                <div class="flex flex-inline justify-center my-1">
+                  <div class="mx-2 text-white font-bold rounded-lg p-1 w-8 h-8" :class="game.platforms.includes('PC') ? 'bg-xbox' : 'bg-gris'">
+                    <IconPC />
+                  </div>
+                  <div class="mx-2 text-white font-bold rounded-lg p-1 w-8 h-8" :class="game.platforms.includes('XBOX') ? 'bg-xbox' : 'bg-gris'">
+                    <IconXbox />
+                  </div>
+                  <div class="mx-2 text-white font-bold rounded-lg p-1 w-8 h-8" :class="game.platforms.includes('XCLOUD') ? 'bg-xbox' : 'bg-gris'">
+                    <IconXCloud />
+                  </div>
                 </div>
-                <div class="mx-2 text-white font-bold rounded-lg p-1 w-8 h-8" :class="game.platforms.includes('XBOX') ? 'bg-xbox' : 'bg-gris'">
-                  <IconXbox />
+                <div class="border-l border-r">
+                  <div class="px-2 mb-2">
+                    <div class="font-bold text-md">{{ game.title }}</div>
+                    <div class="text-sm text-gray-600">{{ game.category }}</div>
+                  </div>
                 </div>
-                <div class="mx-2 text-white font-bold rounded-lg p-1 w-8 h-8" :class="game.platforms.includes('XCLOUD') ? 'bg-xbox' : 'bg-gris'">
-                  <IconXCloud />
-                </div>
-              </div>
-              <div class="border-l border-r">
-                <div class="px-2 mb-2">
-                  <div class="font-bold text-md">{{ game.title }}</div>
-                  <div class="text-sm text-gray-600">{{ game.category }}</div>
-                </div>
-              </div>
+              </a>
             </div>
           </div>
         </div>
