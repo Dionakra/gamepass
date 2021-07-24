@@ -114,7 +114,13 @@
                   <div class="relative mx-2 text-white font-bold rounded-lg p-1 w-8 h-8" :class="game.platforms.includes('PC') ? 'bg-xbox' : 'bg-gris'">
                     <IconPC />
 
-                    <div v-if="game.leavingSoonPC" class="absolute bg-red-500 text-white shadow-md -top-1 -right-1 font-bold rounded-full h-4 w-4 text-xl text-center">
+                    <div title="Leaving soon" v-if="game.leavingSoonPC" class="absolute bg-yellow-500 text-white shadow-md -top-1 -right-1 font-bold rounded-full h-4 w-4 text-xl text-center">
+                      <div class="m-auto my-0.5 h-3 w-3">
+                        <IconRightArrow />
+                      </div>
+                    </div>
+
+                    <div title="Coming Soon" v-if="game.comingSoonPC" class="absolute bg-xbox text-white shadow-md -top-1 -left-1 font-bold rounded-full h-4 w-4 text-xl text-center">
                       <div class="m-auto my-0.5 h-3 w-3">
                         <IconRightArrow />
                       </div>
@@ -122,7 +128,12 @@
                   </div>
                   <div class="relative mx-2 text-white font-bold rounded-lg p-1 w-8 h-8" :class="game.platforms.includes('XBOX') ? 'bg-xbox' : 'bg-gris'">
                     <IconXbox />
-                    <div v-if="game.leavingSoonConsole" class="absolute bg-red-500 text-white shadow-md -top-1 -right-1 font-bold rounded-full h-4 w-4 text-xl text-center">
+                    <div title="Leaving soon" v-if="game.leavingSoonConsole" class="absolute bg-yellow-500 text-white shadow-md -top-1 -right-1 font-bold rounded-full h-4 w-4 text-xl text-center">
+                      <div class="m-auto my-0.5 h-3 w-3">
+                        <IconRightArrow />
+                      </div>
+                    </div>
+                    <div title="Coming Soon" v-if="game.comingSoonConsole" class="absolute bg-xbox  text-white shadow-md -top-1 -left-1 font-bold rounded-full h-4 w-4 text-xl text-center">
                       <div class="m-auto my-0.5 h-3 w-3">
                         <IconRightArrow />
                       </div>
@@ -210,7 +221,13 @@ export default {
           if (this.uniqueFilter != undefined) {
             return game[this.uniqueFilter] == true
           } else {
-            return true
+            if (game.comingSoonPC && game.comingSoonConsole && game.platforms.length >= 2) {
+              return false
+            } else if ((game.comingSoonConsole || game.comingSoonPC) && game.platforms.length == 1) {
+              return false
+            } else {
+              return true
+            }
           }
         })
         .filter((game) => {

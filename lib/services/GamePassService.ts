@@ -115,10 +115,10 @@ export default class GamePassService {
       if (exists) {
         exists.platforms = [...new Set([...exists.platforms, ...product.platforms])]
         exists.title = this.cleanTitle(exists.title)
-        exists.comingSoonConsole = exists.comingSoonConsole || product.comingSoonConsole
-        exists.leavingSoonConsole = exists.leavingSoonConsole || product.leavingSoonConsole
-        exists.comingSoonPC = exists.comingSoonPC || product.comingSoonPC
-        exists.leavingSoonPC = exists.leavingSoonPC || product.leavingSoonPC
+        exists.comingSoonConsole ||= product.comingSoonConsole
+        exists.leavingSoonConsole ||= product.leavingSoonConsole
+        exists.comingSoonPC ||= product.comingSoonPC
+        exists.leavingSoonPC ||= product.leavingSoonPC
       } else {
         finalProducts.push(product)
       }
