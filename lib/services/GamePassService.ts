@@ -42,13 +42,13 @@ export default class GamePassService {
     this.xcloud = await this.fetchCategoryGames(this.CATEGORIES.XCLOUD)
   }
 
-  private allIds(): string[] {
+  getAllIds(): string[] {
     return [...new Set([...this.xbox, ...this.pc, ...this.xcloud])]
   }
 
   getNewIds(): string[] {
     const oldProductIds = this.oldProducts.map(p => p.id)
-    return this.allIds().filter(id => !oldProductIds.includes(id))
+    return this.getAllIds().filter(id => !oldProductIds.includes(id))
   }
 
   async fetchDetails(ids: string[]): Promise<GamePassProduct[]> {
@@ -67,13 +67,16 @@ export default class GamePassService {
         img: props.Images.find((image: any) => image.ImagePurpose == "Poster").Uri,
         category: game.Properties.Category,
         platforms: this.getPlatforms(game.ProductId),
-        startDate: new Date().toISOString().substr(0, 10)
+        startDate: new Date().toISOString().substr(0, 10),
+        linkTitle: props.ProductTitle.toLowerCase().replace(/\s/g, "-").replace(/[^a-z0-9-]/gi,'')
       }
+      //https://www.microsoft.com/en-us/store/p/' + titleClickname + '/' + itemId
+      //https://www.microsoft.com/en-us/p/cities-skylines---xbox-one-edition/C4GH8N6ZXG5L
     })
   }
 
   getFinalProducts(products: GamePassProduct[]): GamePassProduct[] {
-    const list: GamePassProduct[] = [...this.oldProducts].filter(x => this.allIds().includes(x.id))
+    const list: GamePassProduct[] = [...this.oldProducts].filter(x => this.getAllIds().includes(x.id))
 
     const finalProducts: GamePassProduct[] = []
     for (let product of [...list, ...products]) {
