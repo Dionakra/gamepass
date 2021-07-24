@@ -5,6 +5,10 @@ export default interface GamePassProduct {
   category: string,
   platforms: string[],
   duration?: Number,
-  startDate: string,
-  linkTitle: string
+  startDate?: string,
+  linkTitle: string,
+  comingSoonPC?: boolean
+  leavingSoonPC?: boolean
+  comingSoonConsole?: boolean
+  leavingSoonConsole?: boolean
 }
