@@ -5,7 +5,8 @@
     "build": "vite build",
     "serve": "vite preview",
     "update": "ts-node lib/updateDB.ts",
-    "images": "ts-node lib/downloadImages.ts"
+    "images": "ts-node lib/downloadImages.ts",
+    "fix": "ts-node lib/fixSomething.ts"
   },
   "dependencies": {
     "vue": "^3.0.5"
