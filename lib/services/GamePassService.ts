@@ -66,7 +66,8 @@ export default class GamePassService {
         title: this.cleanTitle(props.ProductTitle),
         img: props.Images.find((image: any) => image.ImagePurpose == "Poster").Uri,
         category: game.Properties.Category,
-        platforms: this.getPlatforms(game.ProductId)
+        platforms: this.getPlatforms(game.ProductId),
+        startDate: new Date().toISOString().substr(0, 10)
       }
     })
   }
