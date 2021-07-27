@@ -112,6 +112,7 @@ export default class GamePassService {
       product.startDate = product.startDate || comingLeaving.startDate
       product.leavingSoonConsole = comingLeaving.leavingSoonConsole
       product.leavingSoonPC = comingLeaving.leavingSoonPC
+      product.platforms = this.getPlatforms(product.id)
 
       const exists = finalProducts.find(x => x.title.toLowerCase() == product.title.toLowerCase())
 
