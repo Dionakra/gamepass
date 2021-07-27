@@ -187,7 +187,7 @@ export default {
       // Other
       searchTerm: undefined,
       platforms: [],
-      sortByDuration: true,
+      sortByDuration: false,
       uniqueFilter: undefined
     }
   },
