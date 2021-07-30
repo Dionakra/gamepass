@@ -137,8 +137,12 @@ export default class GamePassService {
     const comingSoonConsole = this.comingSoonConsole.some(x => x == id)
 
     let startDate = undefined
-    if ((comingSoonPC && platforms.includes(this.PLATFORMS.PC)) || (comingSoonConsole && platforms.includes(this.PLATFORMS.XBOX))) {
+    if ((!comingSoonPC && platforms.includes(this.PLATFORMS.PC)) || (!comingSoonConsole && platforms.includes(this.PLATFORMS.XBOX))) {
       startDate = new Date().toISOString().substr(0, 10)
+    }
+
+    if(id == "9NQ73XB1Q5ZG"){
+      console.log(startDate)
     }
 
     return <ProductComingLeaving>{
