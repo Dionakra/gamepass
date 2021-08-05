@@ -114,13 +114,21 @@
                   <div class="relative mx-2 text-white font-bold rounded-lg p-1 w-8 h-8" :class="game.platforms.includes('PC') ? 'bg-xbox' : 'bg-gris'">
                     <IconPC />
 
-                    <div title="Leaving soon" v-if="game.leavingSoonPC" class="absolute bg-yellow-500 text-white shadow-md -top-1 -right-1 font-bold rounded-full h-4 w-4 text-xl text-center">
+                    <div
+                      title="Leaving soon"
+                      v-if="game.leavingSoonPC"
+                      class="absolute bg-yellow-500 text-white shadow-md -top-1 -right-1 font-bold rounded-full h-4 w-4 text-xl text-center"
+                    >
                       <div class="m-auto my-0.5 h-3 w-3">
                         <IconRightArrow />
                       </div>
                     </div>
 
-                    <div title="Coming Soon" v-if="game.comingSoonPC" class="absolute bg-xbox text-white shadow-md -top-1 -left-1 font-bold rounded-full h-4 w-4 text-xl text-center">
+                    <div
+                      title="Coming Soon"
+                      v-if="game.comingSoonPC"
+                      class="absolute bg-xbox text-white shadow-md -top-1 -left-1 font-bold rounded-full h-4 w-4 text-xl text-center"
+                    >
                       <div class="m-auto my-0.5 h-3 w-3">
                         <IconRightArrow />
                       </div>
@@ -128,12 +136,20 @@
                   </div>
                   <div class="relative mx-2 text-white font-bold rounded-lg p-1 w-8 h-8" :class="game.platforms.includes('XBOX') ? 'bg-xbox' : 'bg-gris'">
                     <IconXbox />
-                    <div title="Leaving soon" v-if="game.leavingSoonConsole" class="absolute bg-yellow-500 text-white shadow-md -top-1 -right-1 font-bold rounded-full h-4 w-4 text-xl text-center">
+                    <div
+                      title="Leaving soon"
+                      v-if="game.leavingSoonConsole"
+                      class="absolute bg-yellow-500 text-white shadow-md -top-1 -right-1 font-bold rounded-full h-4 w-4 text-xl text-center"
+                    >
                       <div class="m-auto my-0.5 h-3 w-3">
                         <IconRightArrow />
                       </div>
                     </div>
-                    <div title="Coming Soon" v-if="game.comingSoonConsole" class="absolute bg-xbox  text-white shadow-md -top-1 -left-1 font-bold rounded-full h-4 w-4 text-xl text-center">
+                    <div
+                      title="Coming Soon"
+                      v-if="game.comingSoonConsole"
+                      class="absolute bg-xbox text-white shadow-md -top-1 -left-1 font-bold rounded-full h-4 w-4 text-xl text-center"
+                    >
                       <div class="m-auto my-0.5 h-3 w-3">
                         <IconRightArrow />
                       </div>
@@ -188,7 +204,8 @@ export default {
       searchTerm: undefined,
       platforms: [],
       sortByDuration: false,
-      uniqueFilter: undefined
+      uniqueFilter: undefined,
+      defaultStartDate: new Date().toISOString().substr(0, 10)
     }
   },
   created() {
@@ -249,7 +266,7 @@ export default {
           if (this.sortByDuration) {
             res = (a.duration || 0) - (b.duration || 0)
           } else {
-            res = b.startDate.localeCompare(a.startDate)
+            res = (b.startDate || this.defaultStartDate).localeCompare(a.startDate || this.defaultStartDate)
           }
 
           return res == 0 ? a.title.localeCompare(b.title) : res
