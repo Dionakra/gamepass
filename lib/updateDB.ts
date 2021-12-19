@@ -34,6 +34,5 @@ async function main() {
     console.log("****************")
     console.log("Products without duration")
     console.log(stillNoDuration)
-    process.exit(-1)
   }
 }

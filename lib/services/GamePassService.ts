@@ -38,7 +38,7 @@ export default class GamePassService {
     ": https://partner.microsoft.com/en-us/dashboard/products/9NF83PRZK6K3/listingsChapters 1-3", "Explorer's Edition", "Complete Edition",
     ": Standard Edition", "- Standard Edition", "SEASON UPDATE STANDARD EDITION", "Game of the Year Edition", ": Standard", "- Game Preview", "Standard Edition",
     ": Reloaded", ": Definitive Edition", ": Legendary Edition", "(Game Preview)", ": Juggernaut Edition", " - Deluxe Edition", ": Complete Collection",
-    ": Deluxe Edition", ": Cadet Edition", "- Ultimate Edition", ": Hero Edition"]
+    ": Deluxe Edition", ": Cadet Edition", "- Ultimate Edition", ": Hero Edition", "(Campaign)"]
 
   constructor(dbPath: string) {
     const text = fs.readFileSync(dbPath, "utf-8")
@@ -76,7 +76,7 @@ export default class GamePassService {
     }
 
     const data = await fetch("https://displaycatalog.mp.microsoft.com/v7.0/products?bigIds=" + ids.join(",") + "&market=GB&languages=en-en&MS-CV=DGU1mcuYo0WMMp+F.1")
-      .then(response => response.json())
+      .then((response: { json: () => any }) => response.json())
 
     return data.Products.map((game: any) => {
       const props = game.LocalizedProperties[0]
@@ -84,11 +84,12 @@ export default class GamePassService {
 
       const platforms = this.getPlatforms(id)
       const comingLeaving = this.getComingLeaving(id)
+      const imgObj: any | undefined = props.Images.find((image: any) => image.ImagePurpose == "Poster")
 
       return {
         id: id,
         title: this.cleanTitle(props.ProductTitle),
-        img: props.Images.find((image: any) => image.ImagePurpose == "Poster").Uri,
+        img: imgObj ? imgObj.Uri : undefined,
         category: game.Properties.Category,
         platforms: platforms,
         startDate: comingLeaving.startDate,
@@ -141,7 +142,7 @@ export default class GamePassService {
       startDate = new Date().toISOString().substr(0, 10)
     }
 
-    if(id == "9NQ73XB1Q5ZG"){
+    if (id == "9NQ73XB1Q5ZG") {
       console.log(startDate)
     }
 
@@ -156,7 +157,7 @@ export default class GamePassService {
   }
 
   private async fetchCategoryGames(category: string): Promise<string[]> {
-    const data = await fetch("https://catalog.gamepass.com/sigls/v2?id=" + category + "&language=en-en&market=GB")
+    const data: any = await fetch("https://catalog.gamepass.com/sigls/v2?id=" + category + "&language=en-en&market=GB")
       .then(response => response.json())
 
     return data
