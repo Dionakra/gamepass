@@ -12,6 +12,7 @@
     "vue": "^3.0.5"
   },
   "devDependencies": {
+    "@types/node": "^17.0.0",
     "@types/node-fetch": "^2.5.10",
     "@types/sharp": "^0.28.4",
     "@vitejs/plugin-vue": "^1.2.3",
