@@ -17,7 +17,7 @@ export default class GamePassService {
 
   private CATEGORIES = {
     CONSOLE: "f6f1f99f-9b49-4ccd-b3bf-4d9767a77f5e",
-    PC: "fdd9e2a7-0fee-49f6-ad69-4354098401ff",
+    PC: "609d944c-d395-4c0a-9ea4-e9f39b52c1ad",
     XCLOUD: "29a81209-df6f-41fd-a528-2ae6b91f719c",
     COMING_SOON_CONSOLE: "095bda36-f5cd-43f2-9ee1-0a72f371fb96",
     LEAVING_SOON_CONSOLE: "393f05bf-e596-4ef6-9487-6d4fa0eab987",
@@ -38,7 +38,10 @@ export default class GamePassService {
     ": https://partner.microsoft.com/en-us/dashboard/products/9NF83PRZK6K3/listingsChapters 1-3", "Explorer's Edition", "Complete Edition",
     ": Standard Edition", "- Standard Edition", "SEASON UPDATE STANDARD EDITION", "Game of the Year Edition", ": Standard", "- Game Preview", "Standard Edition",
     ": Reloaded", ": Definitive Edition", ": Legendary Edition", "(Game Preview)", ": Juggernaut Edition", " - Deluxe Edition", ": Complete Collection",
-    ": Deluxe Edition", ": Cadet Edition", "- Ultimate Edition", ": Hero Edition", "(Campaign)"]
+    ": Deluxe Edition", ": Cadet Edition", "- Ultimate Edition", ": Hero Edition", "(Campaign)", "[Xbox]", "- Digital Version", "[Win10]",
+    " Premium Edition", " Ultimate Edition", " Year 2 Edition", " Maximum Edition", " Digital Deluxe Edition", " N7 Digital Deluxe Edition", " Deluxe Edition",
+    ": Complete Edition", " Special Edition", ": Celebration Edition", " Starter Pack", " Deluxe Party Edition",
+    ": Ultimate Edition", " DELUXE EDITION", " Standard Edition", " Remastered Collection", "- Game of the Year Edition", ": Special Edition"].sort((a, b) => b.length - a.length)
 
   constructor(dbPath: string) {
     const text = fs.readFileSync(dbPath, "utf-8")
@@ -142,10 +145,6 @@ export default class GamePassService {
       startDate = new Date().toISOString().substr(0, 10)
     }
 
-    if (id == "9NQ73XB1Q5ZG") {
-      console.log(startDate)
-    }
-
     return <ProductComingLeaving>{
       id: id,
       comingSoonConsole: comingSoonConsole,
@@ -167,14 +166,12 @@ export default class GamePassService {
 
   private cleanTitle(title: string): string {
     for (let rubbish of this.titleRubbish) {
-      // Twice just in case
-      title = title.replace(rubbish, "")
-      title = title.replace(rubbish, "")
+      title = title.split(rubbish).join("").trim()
     }
 
-    title = title.replace("FIFA 21 Standard Edition", "FIFA 21")
-
-    return title.trim()
+    // Custom fuckeries
+    title.replace("Dragon Age II", "Dragon Age 2")
+    return title
   }
 
   private getPlatforms(id: string): string[] {
