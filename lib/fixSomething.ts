@@ -21,10 +21,14 @@ async function main() {
     const detail = details.find(x => x.id == game.id)
 
     if (detail) {
-      game.comingSoonConsole = detail.comingSoonConsole
-      game.comingSoonPC = detail.comingSoonPC
-      game.leavingSoonConsole = detail.leavingSoonConsole
-      game.leavingSoonPC = detail.leavingSoonPC
+      game.comingSoonConsole = detail.comingSoonConsole || false
+      game.comingSoonPC = detail.comingSoonPC || false
+      game.leavingSoonConsole = detail.leavingSoonConsole || false
+      game.leavingSoonPC = detail.leavingSoonPC || false
+      game.localCoop = detail.localCoop
+      game.localMultiplayer = detail.localMultiplayer
+      game.onlineCoop = detail.onlineCoop
+      game.onlineMultiplayer = detail.onlineMultiplayer
     }
   }
 
