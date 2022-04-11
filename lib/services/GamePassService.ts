@@ -1,5 +1,5 @@
 import fetch from "node-fetch"
-import GamePassProduct from "../models/GamePassProduct"
+import GamePassProduct, { Multiplayer } from "../models/GamePassProduct"
 import fs from "fs"
 import ProductComingLeaving from "../models/ProductComingLeaving"
 
@@ -88,8 +88,9 @@ export default class GamePassService {
       const platforms = this.getPlatforms(id)
       const comingLeaving = this.getComingLeaving(id)
       const imgObj: any | undefined = props.Images.find((image: any) => image.ImagePurpose == "Poster")
+      const attributes: any[] = game.Properties.Attributes
 
-      return {
+      return <GamePassProduct>{
         id: id,
         title: this.cleanTitle(props.ProductTitle),
         img: imgObj ? imgObj.Uri : undefined,
@@ -101,8 +102,29 @@ export default class GamePassService {
         leavingSoonConsole: comingLeaving.leavingSoonConsole,
         comingSoonPC: comingLeaving.comingSoonPC,
         leavingSoonPC: comingLeaving.leavingSoonPC,
+        localCoop: this.hasProperty(attributes, 'XblLocalCoop'),
+        localMultiplayer: this.hasProperty(attributes, 'XblOnlineCoop'),
+        onlineCoop:  this.hasProperty(attributes, 'XblLocalMultiPlayer'),
+        onlineMultiplayer: this.hasProperty(attributes, 'XblOnlineMultiPlayer')
       }
     })
+  }
+
+  private hasProperty(properties: any[], name: string): Multiplayer | undefined {
+    if(properties == null){
+      return undefined
+    }
+
+    const multi: any = properties.find(property => property.Name == name)
+
+    if (multi != undefined) {
+      return <Multiplayer>{
+        min: multi.Minimum == null ? undefined : multi.Minimum,
+        max: multi.Maximum == null ? undefined : multi.Maximum
+      }
+    } else {
+      return undefined
+    }
   }
 
   getFinalProducts(products: GamePassProduct[]): GamePassProduct[] {

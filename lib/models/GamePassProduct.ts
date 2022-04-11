@@ -11,4 +11,13 @@ export default interface GamePassProduct {
   leavingSoonPC?: boolean
   comingSoonConsole?: boolean
   leavingSoonConsole?: boolean
+  localCoop?: Multiplayer
+  localMultiplayer?: Multiplayer
+  onlineCoop?: Multiplayer
+  onlineMultiplayer?: Multiplayer
+}
+
+export interface Multiplayer {
+  min?: number;
+  max?: number;
 }
