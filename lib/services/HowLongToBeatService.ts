@@ -7,9 +7,21 @@ export default class HowLongToBeatService {
   async getDuration(title: string): Promise<Number | undefined> {
     const html = await fetch("https://howlongtobeat.com/search_results?page=1", {
       "headers": {
-        "content-type": "application/x-www-form-urlencoded"
+        "accept": "*/*",
+        "accept-language": "es,en-GB;q=0.9,en;q=0.8",
+        "cache-control": "no-cache",
+        "content-type": "application/x-www-form-urlencoded",
+        "pragma": "no-cache",
+        "sec-ch-ua": "\" Not A;Brand\";v=\"99\", \"Chromium\";v=\"102\", \"Google Chrome\";v=\"102\"",
+        "sec-ch-ua-mobile": "?0",
+        "sec-ch-ua-platform": "\"Windows\"",
+        "sec-fetch-dest": "empty",
+        "sec-fetch-mode": "cors",
+        "sec-fetch-site": "same-origin",
+        "Referer": "https://howlongtobeat.com/",
+        "Referrer-Policy": "strict-origin-when-cross-origin"
       },
-      "body": "queryString=" + title + "&t=games&sorthead=popular&sortd=Normal Order&plat=&length_type=main&length_min=&length_max=&v=&f=&g=&detail=&randomize=0",
+      "body": "queryString=" + encodeURIComponent(title) + "&t=games&sorthead=popular&sortd=0&plat=&length_type=main&length_min=&length_max=&v=&f=&g=&detail=&randomize=0",
       "method": "POST"
     }).then(response => response.text())
 
