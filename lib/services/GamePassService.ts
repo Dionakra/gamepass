@@ -41,7 +41,7 @@ export default class GamePassService {
     ": Deluxe Edition", ": Cadet Edition", "- Ultimate Edition", ": Hero Edition", "(Campaign)", "[Xbox]", "- Digital Version", "[Win10]",
     " Premium Edition", " Ultimate Edition", " Year 2 Edition", " Maximum Edition", " Digital Deluxe Edition", " N7 Digital Deluxe Edition", " Deluxe Edition",
     ": Complete Edition", " Special Edition", ": Celebration Edition", " Starter Pack", " Deluxe Party Edition",
-    ": Ultimate Edition", " DELUXE EDITION", " Standard Edition", " Remastered Collection", "- Game of the Year Edition", ": Special Edition"].sort((a, b) => b.length - a.length)
+    ": Ultimate Edition", " DELUXE EDITION", " Standard Edition", " Remastered Collection", "- Game of the Year Edition", ": Special Edition", "Anniversary Edition", "(Win)", "- Full Bloom Edition", "Remastered", "- Windows", ": Java & Bedrock Edition for PC", " for Windows"].sort((a, b) => b.length - a.length)
 
   constructor(dbPath: string) {
     const text = fs.readFileSync(dbPath, "utf-8")
