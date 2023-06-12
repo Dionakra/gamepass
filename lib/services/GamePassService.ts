@@ -32,7 +32,7 @@ export default class GamePassService {
   }
 
   // Things to remove from titles
-  private titleRubbish: string[] = ["™", "®", "- Windows 10 Edition", ": Console Edition", "- Xbox One Edition", "Xbox Edition", "Xbox One & Xbox Series X|S",
+  private titleRubbish: string[] = [" - PC Edition", " EA Play Edition", " - The Prince's Edition", " Preview", " Standard 40th Anniversary Edition", " (Xbox Series X|S & PC)", "(Xbox One)", " (Windows Version)", " - Xbox One Edition", " - The Complete Season (Episodes 1-5)", " - The Complete Season", " - Xbox Series X|S", " for Windows + Launcher", " (2010 Edition)", " (2012 Edition)", " Console", "™", "®", "- Windows 10 Edition", ": Console Edition", "- Xbox One Edition", "Xbox Edition", "Xbox One & Xbox Series X|S",
     "Xbox One", "Xbox Series X|S", "Xbox Series X | S", "for Windows 10", "(PC)", "- PC", "PC", "- Windows Edition", "(Windows)", "Win10", "- Windows 10",
     "(Windows 10)", "Windows 10", "WIN10", " WINDOWS EDITION", ": Windows Edition", "Windows", "XB1", " - Microsoft Store Edition",
     ": https://partner.microsoft.com/en-us/dashboard/products/9NF83PRZK6K3/listingsChapters 1-3", "Explorer's Edition", "Complete Edition",
