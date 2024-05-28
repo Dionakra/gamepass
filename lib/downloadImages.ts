@@ -1,7 +1,6 @@
 import fs from "fs"
 import sharp from "sharp"
 import GamePassProduct from "./models/GamePassProduct"
-import fetch from "node-fetch"
 
 const WIDTH = 300
 const DB_FILE = __dirname + "/../public/index.json"
@@ -14,7 +13,7 @@ async function downloadImages(width: number) {
   for (let game of games) {
     if (game.img) {
       console.log(`Downloading ${game.title}`)
-      const buffer = await fetch(game.img.replace("//", "https://")).then(response => response.buffer())
+      const buffer = await fetch(game.img.replace("//", "https://")).then(response => response.arrayBuffer())
       await sharp(buffer).resize(width).jpeg().toFile(__dirname + "/../public/covers/" + game.id + ".jpeg")
       game.img = undefined
     }

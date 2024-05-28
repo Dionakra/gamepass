@@ -21,7 +21,7 @@ async function main() {
     product.duration = await hltb.getDuration(product.title)
   }
 
-  if(gamePass.getOldProductsText() == JSON.stringify(products)){
+  if (gamePass.getOldProductsText() == JSON.stringify(products)) {
     console.log("No change :)")
     return
   }
