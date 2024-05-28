@@ -1,4 +1,3 @@
-import fetch from "node-fetch"
 import GamePassProduct, { Multiplayer } from "../models/GamePassProduct"
 import fs from "fs"
 import ProductComingLeaving from "../models/ProductComingLeaving"
@@ -32,7 +31,9 @@ export default class GamePassService {
   }
 
   // Things to remove from titles
-  private titleRubbish: string[] = [" - Game Of The Year Edition", " - Digital Edition", " (Xbox Series X|S)", " for Windows + Launcher", " - 2008", " - PC Edition", " EA Play Edition", " - The Prince's Edition", " Preview", " Standard 40th Anniversary Edition", " (Xbox Series X|S & PC)", "(Xbox One)", " (Windows Version)", " - Xbox One Edition", " - The Complete Season (Episodes 1-5)", " - The Complete Season", " - Xbox Series X|S", " for Windows + Launcher", " (2010 Edition)", " (2012 Edition)", " Console", "™", "®", "- Windows 10 Edition", ": Console Edition", "- Xbox One Edition", "Xbox Edition", "Xbox One & Xbox Series X|S",
+  private titleRubbish: string[] = [" Cross-Gen Bundle", " Planetary Pack", " Cross-Gen Standard Edition", " - Turbocharged", " : MARCHING FIRE EDITION", " for Xbox One", " for Xbox Series X|S", " Definitive Edition", " Xbox", " for Xbox", "- Game Of The Year Edition",
+    " - Digital Edition", " (Xbox Series X|S)", " for Windows + Launcher", " - 2008", " - PC Edition", " EA Play Edition", " - The Prince's Edition", " Preview", " Standard 40th Anniversary Edition", " (Xbox Series X|S & PC)", "(Xbox One)", " (Windows Version)", " - Xbox One Edition",
+    " - The Complete Season (Episodes 1-5)", " - The Complete Season", " - Xbox Series X|S", " for Windows + Launcher", " (2010 Edition)", " (2012 Edition)", " Console", "™", "®", "- Windows 10 Edition", ": Console Edition", "- Xbox One Edition", "Xbox Edition", "Xbox One & Xbox Series X|S",
     "Xbox One", "Xbox Series X|S", "Xbox Series X | S", "for Windows 10", "(PC)", "- PC", "PC", "- Windows Edition", "(Windows)", "Win10", "- Windows 10",
     "(Windows 10)", "Windows 10", "WIN10", " WINDOWS EDITION", ": Windows Edition", "Windows", "XB1", " - Microsoft Store Edition",
     ": https://partner.microsoft.com/en-us/dashboard/products/9NF83PRZK6K3/listingsChapters 1-3", "Explorer's Edition", "Complete Edition",
@@ -78,7 +79,7 @@ export default class GamePassService {
       return []
     }
 
-    const data = await fetch("https://displaycatalog.mp.microsoft.com/v7.0/products?bigIds=" + ids.join(",") + "&market=GB&languages=en-en&MS-CV=DGU1mcuYo0WMMp+F.1")
+    const data = await fetch(`https://displaycatalog.mp.microsoft.com/v7.0/products?bigIds=${ids.join(",")}&market=GB&languages=en-en&MS-CV=DGU1mcuYo0WMMp+F.1`)
       .then((response: { json: () => any }) => response.json())
 
     return data.Products.map((game: any) => {
@@ -178,7 +179,7 @@ export default class GamePassService {
   }
 
   private async fetchCategoryGames(category: string): Promise<string[]> {
-    const data: any = await fetch("https://catalog.gamepass.com/sigls/v2?id=" + category + "&language=en-en&market=GB")
+    const data: any = await fetch(`https://catalog.gamepass.com/sigls/v2?id=${category}&language=en-en&market=GB`)
       .then(response => response.json())
 
     return data
