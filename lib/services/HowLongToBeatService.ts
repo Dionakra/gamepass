@@ -5,7 +5,7 @@ export default class HowLongToBeatService {
   async getDuration(title: string): Promise<Number | undefined> {
     let duration: Number | undefined = undefined
 
-    const response = await fetch("https://howlongtobeat.com/api/lookup/cb0ebf78648b9bb7", {
+    const response = await fetch("https://howlongtobeat.com/api/ouch/86d5ef1971943765", {
       "headers": {
         "user-agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.36",
         "referer": "https://howlongtobeat.com/?q=indiana",
